@@ -43,6 +43,17 @@ public class BootStrapData implements CommandLineRunner {
 
         Publisher publisher = new Publisher("Addison-Wesley Professional", "Boston", "Massachusetts");
         publisherRepository.save(publisher);
-        System.out.println("Publisher: " + publisherRepository.findAll());
+
+        ddd.setPublisher(publisher);
+        noEJB.setPublisher(publisher);
+        bookRepository.save(ddd);
+        bookRepository.save(noEJB);
+
+        publisher.getBooks().add(ddd);
+        publisher.getBooks().add(noEJB);
+        publisherRepository.save(publisher);
+
+        System.out.println("Publisher count: " + publisherRepository.count());
+        System.out.println("Books in publisher: " + publisher.getBooks());
     }
 }
